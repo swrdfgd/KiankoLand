@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kianko Land</title>
+  <style>
+    /* Style the links */
+    a {
+      color: blue;
+      text-decoration: none;
+      font-size: 1.2em;
+      font-family: 'Open Sans', sans-serif;
+    }
+    a:hover {
+      color: purple;
+    }
+    /* Style the heading */
+    h1 {
+      font-size: 3em;
+      text-align: center;
+      margin-top: 50px;
+      font-family: 'Open Sans', sans-serif;
+    }
+    /* Style the list */
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+    /* Style the list items */
+    li {
+      margin: 20px;
+    }
+    /* Style the body */
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f2f2f2;
+    }
+    /* Style the main content */
+    #main-content {
+      width: 80%;
+      float: left;
+      position: absolute;
+    }
+    /* Style the sidebar */
+    #sidebar {
+      width: 20%;
+      float: right;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 20px;
+    }
+    /* Style the shapes */
+    .shape1 {
+      width: 200px;
+      height: 200px;
+      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+      background-color: #F44336; /* red */
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .shape2 {
+      width: 150px;
+      height: 150px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      background-color: #FFEB3B; /* yellow */
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+    .shape3 {
+      width: 200px;
+      height: 150px;
+      clip-path: polygon(20% 0%, 100% 0%, 100% 80%, 80% 100%, 0% 100%);
+      background-color: #4CAF50; /* green */
+      position: absolute;
+      left: 25%;
+      top: -20px;
+    }
+    .shape4 {
+      width: 250px;
+      height: 200px;
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%, 0% 50%);
+      background-color: #3F51B5; /* blue */
+      position: absolute;
+      right: -20px;
+      bottom: -20px;
+    }
+    .shape5 {
+      width: 180px;
+      height: 180px;
+      clip-path: circle(50% at 50% 50%);
+      background-color: #9C27B0; /* purple */
+      position: absolute;
+left: 50%;
+top: 10%;
+}
+.shape6 {
+width: 100px;
+height: 100px;
+clip-path: ellipse(50% 50% at 50% 50%);
+background-color: #2196F3; /* blue */
+position: absolute;
+right: 10%;
+top: 30%;
+}
+.shape7 {
+width: 150px;
+height: 150px;
+clip-path: polygon(20% 20%, 80% 20%, 100% 80%, 0% 80%);
+background-color: #FFC107; /* amber */
+position: absolute;
+left: 20%;
+bottom: 10%;
+}
+.shape8 {
+width: 120px;
+height: 120px;
+clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 30% 100%, 0% 30%);
+background-color: #9E9E9E; /* gray */
+position: absolute;
+right: 30%;
+bottom: 30%;
+}
+.shape9 {
+width: 80px;
+height: 80px;
+clip-path: circle(50% at 20% 50%);
+background-color: #4CAF50; /* green */
+position: absolute;
+left: 10%;
+bottom: 10%;
+}
+.shape10 {
+width: 130px;
+height: 130px;
+clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 30% 100%, 0% 30%);
+background-color: #9C27B0; /* purple */
+position: absolute;
+right: 10%;
+top: 50%;
+}
+.shape11 {
+width: 120px;
+height: 120px;
+clip-path: ellipse(50% 50% at 70% 20%);
+background-color: #3F51B5; /* indigo */
+position: absolute;
+left: 50%;
+bottom: 20%;
+}
+.shape12 {
+width: 90px;
+height: 90px;
+clip-path: polygon(0% 20%, 100% 0%, 100% 100%, 0% 80%);
+background-color: #F44336; /* red */
+position: absolute;
+right: 20%;
+top: 20%;
+}
+.shape13 {
+width: 110px;
+height: 110px;
+clip-path: circle(50% at 50% 70%);
+background-color: #00BCD4; /* teal */
+position: absolute;
+left: 30%;
+bottom: 50%;
+}
+.shape {
+position: absolute;
+z-index: -1; /* Set the z-index to -1 to put it behind other elements */
+}
+</style>
+
+</head>
+<body>
+  <div class="shape1 shape"></div>
+  <div class="shape2 shape"></div>
+  <div class="shape3 shape"></div>
+  <div class="shape4 shape"></div>
+  <div class="shape5 shape"></div>
+  <div class="shape6 shape"></div>
+  <div class="shape7 shape"></div>
+  <div class="shape8 shape"></div>
+  <div class="shape9 shape"></div>
+  <div class="shape10 shape"></div>
+  <div class="shape11 shape"></div>
+  <div class="shape12 shape"></div>
+  <div class="shape13 shape"></div>
+  <div id="main-content">
+    <h1>Kianko Land</h1>
+    <ul>
+       <li><a id="link1" target="_blank">Link 1</a></li>
+       <li><a id="link2" target="_blank">Link 2</a></li>
+       <li><a id="link3" target="_blank">Link 3</a></li>
+       <li><a id="link4" target="_blank">Link 4</a></li>
+       <li><a id="link5" target="_blank">Link 5</a></li>
+       <li><a id="link6" target="_blank">Link 6</a></li>
+       <li><a id="link7" target="_blank">Link 7</a></li>
+       <li><a id="link8" target="_blank">Link 8</a></li>
+       <li><a id="link9" target="_blank">Link 9</a></li>
+       <li><a id="link10" target="_blank">Link 10</a></li>
+    </ul>
+  </div>
+<script>
+var daftarLink = [['https://random-english-words.blogspot.com/','<img width="20px" height="auto" src="ukflag.png"/>Random English Words'],
+['https://swrdfgd.github.io/PunkRecords','📚Punk Records'],
+['https://randomarabicwords.blogspot.com/','<img width="20px" height="auto" src="arabflag.png"/>Random Arabic Words'],
+['https://swrdfgd.github.io/RandomYoutube/','📺Random Youtube Video'],
+['https://swrdfgd.github.io/BelajarMembaca/','📖Belajar Membaca Huruf Latin Generator'],
+['https://www.knkland.com/p/ruang-koding.html','💻Ruang Koding'],
+['https://internetmainmenu.blogspot.com/','🌐Internet Main Menu'],
+['https://swrdfgd.github.io/HiraganaPractice/','<img width="20px" height="auto" src="jpflag.png"/>Hiragana Practice'],
+['https://swrdfgd.github.io/KatakanaPractice/','<img width="20px" height="auto" src="jpflag.png"/>Katakana Practice'],
+['https://swrdfgd.github.io/RandomWebsite/','🌐🏄Random Website List'],
+['https://pergikemanamanasaja.blogspot.com/','🌐🚶Pergi Ke Mana Saja'],
+['https://mathzpace.blogspot.com/','🚀mathZpace'],
+['https://swrdfgd.github.io/HiraKataPractice/','<img width="20px" height="auto" src="jpflag.png"/>Hiragana and Katakana Practice'],
+['https://frk-tal.blogspot.com/2021/12/string-permutations-generator.html','🔡🔄String Permutations Generator'],
+['https://frk-tal.blogspot.com/p/random-imgur.html','🖼Random Imgur Image Generator'],
+['https://frk-tal.blogspot.com/2022/09/graph-sketcher.html','🖍Graph Sketcher'],
+['https://frk-tal.blogspot.com/2022/09/random-food-generator.html','🍖Random Food Generator'],
+['https://frk-tal.blogspot.com/2022/08/random-plants-vs-zombies-2-plants.html','🌱🧟Random Plants Vs Zombies 2 Plants Generator'],
+['https://frk-tal.blogspot.com/2022/08/random-substance-generator.html','⚗Random Substance Generator'],
+['https://frk-tal.blogspot.com/2022/08/random-graph-generator.html','🖍Random Graph Generator'],
+['https://frk-tal.blogspot.com/2022/08/random-yugioh-card-generator.html','🎴Random Yugioh Card Generator'],
+['https://frk-tal.blogspot.com/2022/08/color-gradient-generator.html','🌈Random Color Gradient Generator'],
+['https://frk-tal.blogspot.com/2022/07/random-color-generator.html','🌈Random Color Generator'],
+['https://frk-tal.blogspot.com/2022/07/random-compound-generator.html','🧪Random Compound Generator'],
+];
+
+for (let i = 1; i < 11; i++){
+pilihanLink = daftarLink[Math.floor(Math.random()*daftarLink.length)];
+document.getElementById(`link${i}`).href = pilihanLink[0];
+document.getElementById(`link${i}`).innerHTML = pilihanLink[1];
+}
+
+</script>
+  <div id="sidebar">
+    <style scoped='' type="text/css">
+.arlina-random ul{list-style:none;margin:0;padding:0}#arlina-random li{display:block;clear:both;overflow:hidden;list-style:none;border-bottom:1px solid #e3e3e3;word-break:break-word;padding:10px 0;margin:0;}
+.arlina-random li:last-child{border-bottom:0;}
+.arlina-random li a{color:#444;}#arlina-random li a:hover{color:#444;text-decoration:underline}
+
+
+</style>
+<div id='arlina-random1' class="arlina-random">Memuat...</div>
+<div id='arlina-random2' class="arlina-random">Memuat...</div>
+<div id='arlina-random3' class="arlina-random">Memuat...</div>
+<div id='arlina-random4' class="arlina-random">Memuat...</div>
+
+<script>
+daftarweb = ['https://www.knkland.com/','http://maswody.blogspot.com/','http://maplescuul.blogspot.com/','https://frk-tal.blogspot.com/','https://matiyamenye.blogspot.com/',];
+</script>
+<script>
+var maxResults = 1,
+    
+    pilihanweb = Math.floor(Math.random()*(daftarweb.length)),
+    homePage = daftarweb[pilihanweb],
+    containerId = 'arlina-random1';
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function shuffleArray(arr) {
+    var i = arr.length, j, temp;
+    if (i === 0) return false;
+    while (--i) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+}
+function ArlinaRandomPosts(json) {
+    var startIndex = getRandomInt(1, (json.feed.openSearch$totalResults.$t - maxResults));
+    // console.log('Get the post feed start from ' + startIndex + ' until ' + (startIndex + maxResults));
+    document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&orderby=updated&start-index=' + startIndex + '&max-results=' + maxResults + '&callback=randomPosts"></scr' + 'ipt>');
+}
+function randomPosts(json) {
+    var link, ct = document.getElementById(containerId),
+        entry = shuffleArray(json.feed.entry),
+        skeleton = "<ul>";
+    for (var i = 0, len = entry.length; i < len; i++) {
+        for (var j = 0, jen = entry[i].link.length; j < jen; j++) {
+            link = (entry[i].link[j].rel == "alternate") ? entry[i].link[j].href : '#';
+        }
+        skeleton += '<li><a href="' + link + '">' + entry[i].title.$t + '</a></li>';
+
+    }
+    ct.innerHTML = skeleton + '</ul>';
+}
+document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&max-results=0&callback=ArlinaRandomPosts"></scr' + 'ipt>');
+</script>
+<script>
+var maxResults = 1,
+    pilihanweb = Math.floor(Math.random()*(daftarweb.length)),
+    homePage = daftarweb[pilihanweb],
+    containerId = 'arlina-random2';
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function shuffleArray(arr) {
+    var i = arr.length, j, temp;
+    if (i === 0) return false;
+    while (--i) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+}
+function ArlinaRandomPosts(json) {
+    var startIndex = getRandomInt(1, (json.feed.openSearch$totalResults.$t - maxResults));
+    // console.log('Get the post feed start from ' + startIndex + ' until ' + (startIndex + maxResults));
+    document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&orderby=updated&start-index=' + startIndex + '&max-results=' + maxResults + '&callback=randomPosts"></scr' + 'ipt>');
+}
+function randomPosts(json) {
+    var link, ct = document.getElementById(containerId),
+        entry = shuffleArray(json.feed.entry),
+        skeleton = "<ul>";
+    for (var i = 0, len = entry.length; i < len; i++) {
+        for (var j = 0, jen = entry[i].link.length; j < jen; j++) {
+            link = (entry[i].link[j].rel == "alternate") ? entry[i].link[j].href : '#';
+        }
+        skeleton += '<li><a href="' + link + '">' + entry[i].title.$t + '</a></li>';
+
+    }
+    ct.innerHTML = skeleton + '</ul>';
+}
+document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&max-results=0&callback=ArlinaRandomPosts"></scr' + 'ipt>');
+</script>
+<script>
+var maxResults = 1,
+    pilihanweb = Math.floor(Math.random()*(daftarweb.length)),
+    homePage = daftarweb[pilihanweb],
+    containerId = 'arlina-random3';
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function shuffleArray(arr) {
+    var i = arr.length, j, temp;
+    if (i === 0) return false;
+    while (--i) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+}
+function ArlinaRandomPosts(json) {
+    var startIndex = getRandomInt(1, (json.feed.openSearch$totalResults.$t - maxResults));
+    // console.log('Get the post feed start from ' + startIndex + ' until ' + (startIndex + maxResults));
+    document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&orderby=updated&start-index=' + startIndex + '&max-results=' + maxResults + '&callback=randomPosts"></scr' + 'ipt>');
+}
+function randomPosts(json) {
+    var link, ct = document.getElementById(containerId),
+        entry = shuffleArray(json.feed.entry),
+        skeleton = "<ul>";
+    for (var i = 0, len = entry.length; i < len; i++) {
+        for (var j = 0, jen = entry[i].link.length; j < jen; j++) {
+            link = (entry[i].link[j].rel == "alternate") ? entry[i].link[j].href : '#';
+        }
+        skeleton += '<li><a href="' + link + '">' + entry[i].title.$t + '</a></li>';
+
+    }
+    ct.innerHTML = skeleton + '</ul>';
+}
+document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&max-results=0&callback=ArlinaRandomPosts"></scr' + 'ipt>');
+</script>
+<script>
+var maxResults = 1,
+    pilihanweb = Math.floor(Math.random()*(daftarweb.length)),
+    homePage = daftarweb[pilihanweb],
+    containerId = 'arlina-random4';
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function shuffleArray(arr) {
+    var i = arr.length, j, temp;
+    if (i === 0) return false;
+    while (--i) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+}
+function ArlinaRandomPosts(json) {
+    var startIndex = getRandomInt(1, (json.feed.openSearch$totalResults.$t - maxResults));
+    // console.log('Get the post feed start from ' + startIndex + ' until ' + (startIndex + maxResults));
+    document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&orderby=updated&start-index=' + startIndex + '&max-results=' + maxResults + '&callback=randomPosts"></scr' + 'ipt>');
+}
+function randomPosts(json) {
+    var link, ct = document.getElementById(containerId),
+        entry = shuffleArray(json.feed.entry),
+        skeleton = "<ul>";
+    for (var i = 0, len = entry.length; i < len; i++) {
+        for (var j = 0, jen = entry[i].link.length; j < jen; j++) {
+            link = (entry[i].link[j].rel == "alternate") ? entry[i].link[j].href : '#';
+        }
+        skeleton += '<li><a href="' + link + '">' + entry[i].title.$t + '</a></li>';
+
+    }
+    ct.innerHTML = skeleton + '</ul>';
+}
+document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&max-results=0&callback=ArlinaRandomPosts"></scr' + 'ipt>');
+</script>
+  </div>
+  
+
+
+
+</body>
+</html>
