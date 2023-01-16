@@ -13,6 +13,27 @@
     a:hover {
       color: purple;
     }
+    .buttonClass {
+      font-size:21px;
+      font-family:Trebuchet MS;
+      width:200px;
+      height:71px;
+      border-width:1px;
+      color:#fff;
+      border-color:rgba(132, 187, 243, 0.5);
+      font-weight:bold;
+      border-top-left-radius:6px;
+      border-top-right-radius:6px;
+      border-bottom-left-radius:6px;
+      border-bottom-right-radius:6px;
+      box-shadow:inset 0px 1px 0px 0px rgba(220, 236, 251, 0.59);
+      text-shadow: 0 0 8px black;
+      background:linear-gradient(rgba(189, 219, 250, 0.49), rgba(128, 181, 234, 0.43));
+    }
+
+    .buttonClass:hover {
+      background: linear-gradient(rgba(128, 181, 234, 0.43), rgba(189, 219, 250, 0.49));
+    }
     /* Style the heading */
     h1 {
       font-size: 3em;
@@ -234,6 +255,7 @@ for (let i = 1; i < 11; i++){
 pilihanLink = daftarLink[Math.floor(Math.random()*daftarLink.length)];
 document.getElementById(`link${i}`).href = pilihanLink[0];
 document.getElementById(`link${i}`).innerHTML = pilihanLink[1];
+document.getElementById(`link${i}`).setAttribute('class',"buttonClass");
 }
 
 </script>
