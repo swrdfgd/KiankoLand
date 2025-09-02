@@ -197,63 +197,153 @@
       if(el){el.href=choice[0];el.innerHTML=choice[1];}
     }
 
-    /* ========== BACKGROUND BALLS ========== */
-    (function(){
-      const canvas=document.getElementById('bgCanvas');
-      const ctx=canvas.getContext('2d',{alpha:true});
-      let dpr=window.devicePixelRatio||1,width,height,balls=[];
-      const rand=(a,b)=>a+Math.random()*(b-a);
-
-      function resize(){
-        const cssW=window.innerWidth,cssH=window.innerHeight;
-        dpr=window.devicePixelRatio||1;
-        canvas.width=cssW*dpr;canvas.height=cssH*dpr;
-        canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
-        width=canvas.width;height=canvas.height;
-      }
-
-      function makeBall(){
-		ballSizeMax = 46;
-		while (Math.random() < 0.5){ballSizeMax++;}
-        const r=rand(1,ballSizeMax)*dpr;
-        const spd=rand(0.06,0.35)*dpr;
-        const dir=Math.random()*Math.PI*2;
-        const hue=Math.floor(Math.random()*360);
-        const sat=Math.floor(rand(0,100));
-        const light=Math.floor(rand(0,100));
-        return {
-          x:rand(r,width-r),y:rand(r,height-r),r,
-          vx:Math.cos(dir)*spd,vy:Math.sin(dir)*spd,
-          color:`hsla(${hue},${sat}%,${light}%,0.35)`,
-          glow:`hsla(${hue},${sat}%,${light}%,0.55)`
-        };
-      }
-
-      function step(){
-        ctx.clearRect(0,0,width,height);
-        for(const b of balls){
-          b.x+=b.vx;b.y+=b.vy;
-          if(b.x<b.r||b.x>width-b.r) b.vx*=-1;
-          if(b.y<b.r||b.y>height-b.r) b.vy*=-1;
-          ctx.beginPath();
-          ctx.arc(b.x,b.y,b.r*1.8,0,Math.PI*2);
-          const g=ctx.createRadialGradient(b.x,b.y,b.r*0.2,b.x,b.y,b.r*1.8);
-          g.addColorStop(0,b.glow);g.addColorStop(1,'transparent');
-          ctx.fillStyle=g;ctx.fill();
-          ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
-          ctx.fillStyle=b.color;ctx.fill();
-        }
-        requestAnimationFrame(step);
-      }
-
-      resize();
-      window.addEventListener('resize',resize);
-	  var maxBola = 80;
-	  while (Math.random() < 0.5){maxBola++}
-      const total=Math.floor(rand(0,maxBola)); // jumlah bola random
-      balls=Array.from({length:total},makeBall);
-      requestAnimationFrame(step);
-    })();
   </script>
+  
+<script>
+  /* ========== BACKGROUND BALLS with random destruction ========== */
+  (function(){
+    const canvas=document.getElementById('bgCanvas');
+    const ctx=canvas.getContext('2d',{alpha:true});
+    let dpr=window.devicePixelRatio||1,width,height,balls=[];
+    const rand=(a,b)=>a+Math.random()*(b-a);
+
+    function resize(){
+      const cssW=window.innerWidth,cssH=window.innerHeight;
+      dpr=window.devicePixelRatio||1;
+      canvas.width=cssW*dpr;canvas.height=cssH*dpr;
+      canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
+      width=canvas.width;height=canvas.height;
+    }
+
+    function makeBall(){
+	  let maxR = 40;
+	  while (Math.random() < 0.5){maxR++}
+      const baseR = rand(1,maxR)*dpr;
+      const spd = rand(0.06,0.35)*dpr;
+      const dir = Math.random()*Math.PI*2;
+      const hue = Math.floor(Math.random()*360);
+      const sat = Math.floor(rand(0,100));
+      const light = Math.floor(rand(0,100));
+      const z = Math.random();
+      const zv = rand(-0.003,0.003);
+      return {
+        x:rand(baseR,width-baseR), y:rand(baseR,height-baseR),
+        vx:Math.cos(dir)*spd, vy:Math.sin(dir)*spd,
+        baseR, r: baseR, z, zv,
+        hue, sat, light,
+        m: baseR*baseR,
+        lastSpeedChange: performance.now(),
+        lastDestructionCheck: performance.now()
+      };
+    }
+
+    function resolveCollision(a,b,balls){
+      // tumbukan elastis klasik dengan massa
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const dist = Math.hypot(dx,dy) || 1;
+      const nx = dx/dist, ny = dy/dist;
+      const overlap = (a.r + b.r) - dist;
+      if(overlap>0){
+        const push = overlap/2 + 0.1;
+        a.x -= nx*push; a.y -= ny*push;
+        b.x += nx*push; b.y += ny*push;
+      }
+      const tx = -ny, ty = nx;
+      const vAn = a.vx*nx + a.vy*ny;
+      const vAt = a.vx*tx + a.vy*ty;
+      const vBn = b.vx*nx + b.vy*ny;
+      const vBt = b.vx*tx + b.vy*ty;
+      const vAnAfter = (vAn*(a.m-b.m) + 2*b.m*vBn)/(a.m+b.m);
+      const vBnAfter = (vBn*(b.m-a.m) + 2*a.m*vAn)/(a.m+b.m);
+      a.vx = vAnAfter*nx + vAt*tx;
+      a.vy = vAnAfter*ny + vAt*ty;
+      b.vx = vBnAfter*nx + vBt*tx;
+      b.vy = vBnAfter*ny + vBt*ty;
+    }
+
+    function step(){
+      ctx.clearRect(0,0,width,height);
+      const now = performance.now();
+
+      for(const b of balls){
+        // gerakan
+        b.x += b.vx; b.y += b.vy;
+        b.z += b.zv;
+        if(b.z<0){b.z=0; b.zv*=-1;}
+        if(b.z>1){b.z=1; b.zv*=-1;}
+        const scale = 0.6 + b.z*0.8;
+        b.r = b.baseR*scale;
+        b.m = b.r*b.r;
+
+        // bounce dinding
+        if(b.x<b.r || b.x>width-b.r) b.vx*=-1;
+        if(b.y<b.r || b.y>height-b.r) b.vy*=-1;
+
+        // random speed change setiap 2 detik
+        if(now - b.lastSpeedChange > 2000){
+          const spd = rand(0.05,0.4);
+          const dir = Math.atan2(b.vy,b.vx) + rand(-0.5,0.5);
+          b.vx = Math.cos(dir)*spd*dpr;
+          b.vy = Math.sin(dir)*spd*dpr;
+          b.lastSpeedChange = now;
+        }
+
+        // peluang hancur (1% setiap 3 detik)
+        if(now - b.lastDestructionCheck > 3000){
+          if(Math.random() < 0.01){
+            b.remove = true;
+          }
+          b.lastDestructionCheck = now;
+        }
+      }
+
+      // cek tumbukan
+      const zCollideThreshold = 0.12;
+      for(let i=0;i<balls.length;i++){
+        const a = balls[i];
+        for(let j=i+1;j<balls.length;j++){
+          const b = balls[j];
+          const dz = Math.abs(a.z - b.z);
+          if(dz > zCollideThreshold) continue;
+          const dx = b.x - a.x, dy = b.y - a.y;
+          const dist2 = dx*dx + dy*dy;
+          const sumR = a.r + b.r;
+          if(dist2 < sumR*sumR){
+            resolveCollision(a,b,balls);
+          }
+        }
+      }
+
+      balls = balls.filter(b=>!b.remove);
+
+      // gambar
+      balls.sort((a,b)=>a.z-b.z);
+      for(const b of balls){
+        const alpha = 0.22 + b.z*0.25;
+        const glowAlpha = 0.35 + b.z*0.3;
+        ctx.beginPath();
+        ctx.arc(b.x,b.y,b.r*1.8,0,Math.PI*2);
+        const g=ctx.createRadialGradient(b.x,b.y,b.r*0.2,b.x,b.y,b.r*1.8);
+        g.addColorStop(0,`hsla(${b.hue},${b.sat}%,${b.light}%,${glowAlpha})`);
+        g.addColorStop(1,'transparent');
+        ctx.fillStyle=g;ctx.fill();
+        ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+        ctx.fillStyle=`hsla(${b.hue},${b.sat}%,${b.light}%,${alpha})`;
+        ctx.fill();
+      }
+      requestAnimationFrame(step);
+    }
+
+    resize();
+    window.addEventListener('resize',resize);
+    let total = Math.floor(Math.random()*80);
+	while (Math.random() < 0.5){total++}
+    balls = Array.from({length:total},makeBall);
+    requestAnimationFrame(step);
+  })();
+</script>
+
+
+
 </body>
 </html>
