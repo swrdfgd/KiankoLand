@@ -213,12 +213,14 @@
       }
 
       function makeBall(){
-        const r=rand(14,46)*dpr;
+		ballSizeMax = 46;
+		while (Math.random() < 0.5){ballSizeMax++;}
+        const r=rand(1,ballSizeMax)*dpr;
         const spd=rand(0.06,0.35)*dpr;
         const dir=Math.random()*Math.PI*2;
         const hue=Math.floor(Math.random()*360);
-        const sat=Math.floor(rand(60,100));
-        const light=Math.floor(rand(40,65));
+        const sat=Math.floor(rand(0,100));
+        const light=Math.floor(rand(0,100));
         return {
           x:rand(r,width-r),y:rand(r,height-r),r,
           vx:Math.cos(dir)*spd,vy:Math.sin(dir)*spd,
