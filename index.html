@@ -1,524 +1,256 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-      <script src='https://polyfill.io/v3/polyfill.min.js?features=es6'></script>
-    <script async='async' id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Kianko Land</title>
-   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
-    /* Style the links */
-    a {
-      color: blue;
-      text-decoration: none;
-      font-size: 1.2em;
-      font-family: 'Open Sans', sans-serif;
+    :root{
+      --card-bg:#fff;
+      --text:#2c3e50;
+      --muted:#555;
+      --shadow:0 6px 16px rgba(0,0,0,.08);
+      --gradA:#fdfdfd;
+      --gradB:#f3f7fa;
+      --btnA:#6fb1fc;
+      --btnB:#4364f7;
     }
-    a:hover {
-      color: purple;
-    }
-    .buttonClass {
-      font-size:2em;
-      font-family:Trebuchet MS;
-      width:200px;
-      height:71px;
-      border-width:1px;
-      color:#fff;
-      border-color:rgba(132, 187, 243, 0.5);
-      font-weight:bold;
-      border-top-left-radius:6px;
-      border-top-right-radius:6px;
-      border-bottom-left-radius:6px;
-      border-bottom-right-radius:6px;
-      box-shadow:inset 0px 1px 0px 0px rgba(220, 236, 251, 0.59);
-      text-shadow: 0 0 8px black;
-      background:linear-gradient(rgba(189, 219, 250, 0.49), rgba(128, 181, 234, 0.43));
+    *{box-sizing:border-box}
+    body{
+	  margin:0;
+	  font-family:"Open Sans",sans-serif;
+	  color:var(--text);
+	  background: linear-gradient(135deg, #d8b4fe, #ec4899);
+	  min-height:100svh;
+	  overflow-x:hidden;
+	}
+
+
+    /* CANVAS BACKGROUND */
+    .bg-canvas{position:fixed;inset:0;z-index:-2}
+    .soft-overlay{
+      position:fixed;inset:0;
+      background:radial-gradient(1200px 800px at 10% -10%, rgba(111,177,252,.18), transparent 60%),
+                 radial-gradient(1000px 700px at 110% 110%, rgba(67,100,247,.18), transparent 55%);
+      z-index:-1;pointer-events:none;
     }
 
-    .buttonClass:hover {
-      background: linear-gradient(rgba(128, 181, 234, 0.43), rgba(189, 219, 250, 0.49));
-    }
-    .buttonClass2 {
-    font-size:22px;
-    font-family:Georgia;
-    width:143px;
-    height:60px;
-    border-width:1px;
-    color:#ffffff;
-    border-color:#ee1eb5;
-    font-weight:bold;
-    border-top-left-radius:22px;
-    border-top-right-radius:22px;
-    border-bottom-left-radius:22px;
-    border-bottom-right-radius:22px;
-    background:linear-gradient(#ff5bb0, #ef027d);
-    }
+    header{text-align:center;padding:40px 20px 20px}
+    header h1{font-size:2.5rem;font-weight:700;margin:0}
+    header h1 img{vertical-align:middle;height:1.2em;margin-right:10px}
+    header p{font-size:1.05rem;color:var(--muted);margin-top:8px}
+	header h1,
+	header p{
+	  color: #fff;
+	  text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
+	}
+    main{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;padding:20px;max-width:1200px;margin:auto}
 
-   .buttonClass2:hover {
-    background: linear-gradient(#ef027d, #ff5bb0);
-   }
-    /* Style the heading */
-    h1 {
-      font-size: 3em;
-      text-align: center;
-      margin-top: 50px;
-      font-family: 'Open Sans', sans-serif;
+    /* MAIN CONTENT */
+    #main-content{flex:1 1 600px;background:var(--card-bg);padding:25px;border-radius:18px;box-shadow:var(--shadow)}
+    #main-content ul{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      gap:15px;
+      list-style:none;
+      padding:0;margin:0;
     }
-    /* Style the heading */
-    p {
-      font-size: 1em;
-      text-align: center;
-      font-family: 'Open Sans', sans-serif;
+    #main-content li{display:flex}
+    a.buttonClass{
+      display:flex;align-items:center;justify-content:center;
+      width:100%;min-height:64px;
+      font-size:1rem;font-weight:600;
+      border-radius:12px;
+      color:#fff;text-decoration:none;
+      background:linear-gradient(135deg,var(--btnA),var(--btnB));
+      box-shadow:0 4px 10px rgba(0,0,0,.15);
+      transition:transform .2s,filter .3s;
     }
-    /* Style the list */
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-      text-align: center;
-    }
-    /* Style the list items */
-    li {
-      margin: 20px;
-    }
-    /* Style the body */
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background-color: #f2f2f2;
-    }
-    /* Style the main content */
-    #main-content {
-      width: 80%;
-      float: left;
-      position: absolute;
-    }
-    /* Style the sidebar */
-    #sidebar {
-      width: 20%;
-      float: right;
-      background-color: rgba(255, 255, 255, 0.7);
-      padding: 20px;
-    }
-    /* Style the shapes */
-    .shape1 {
-      width: 200px;
-      height: 200px;
-      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-      background-color: #F44336; /* red */
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-    .shape2 {
-      width: 150px;
-      height: 150px;
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background-color: #FFEB3B; /* yellow */
-      position: absolute;
-      right: 0;
-      bottom: 0;
-    }
-    .shape3 {
-      width: 200px;
-      height: 150px;
-      clip-path: polygon(20% 0%, 100% 0%, 100% 80%, 80% 100%, 0% 100%);
-      background-color: #4CAF50; /* green */
-      position: absolute;
-      left: 25%;
-      top: -20px;
-    }
-    .shape4 {
-      width: 250px;
-      height: 200px;
-      clip-path: polygon(50% 0%, 100% 100%, 0% 100%, 0% 50%);
-      background-color: #3F51B5; /* blue */
-      position: absolute;
-      right: -20px;
-      bottom: -20px;
-    }
-    .shape5 {
-      width: 180px;
-      height: 180px;
-      clip-path: circle(50% at 50% 50%);
-      background-color: #9C27B0; /* purple */
-      position: absolute;
-left: 50%;
-top: 10%;
-}
-.shape6 {
-width: 100px;
-height: 100px;
-clip-path: ellipse(50% 50% at 50% 50%);
-background-color: #2196F3; /* blue */
-position: absolute;
-right: 10%;
-top: 30%;
-}
-.shape7 {
-width: 150px;
-height: 150px;
-clip-path: polygon(20% 20%, 80% 20%, 100% 80%, 0% 80%);
-background-color: #FFC107; /* amber */
-position: absolute;
-left: 20%;
-bottom: 10%;
-}
-.shape8 {
-width: 120px;
-height: 120px;
-clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 30% 100%, 0% 30%);
-background-color: #9E9E9E; /* gray */
-position: absolute;
-right: 30%;
-bottom: 30%;
-}
-.shape9 {
-width: 80px;
-height: 80px;
-clip-path: circle(50% at 20% 50%);
-background-color: #4CAF50; /* green */
-position: absolute;
-left: 10%;
-bottom: 10%;
-}
-.shape10 {
-width: 130px;
-height: 130px;
-clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 30% 100%, 0% 30%);
-background-color: #9C27B0; /* purple */
-position: absolute;
-right: 10%;
-top: 50%;
-}
-.shape11 {
-width: 120px;
-height: 120px;
-clip-path: ellipse(50% 50% at 70% 20%);
-background-color: #3F51B5; /* indigo */
-position: absolute;
-left: 50%;
-bottom: 20%;
-}
-.shape12 {
-width: 90px;
-height: 90px;
-clip-path: polygon(0% 20%, 100% 0%, 100% 100%, 0% 80%);
-background-color: #F44336; /* red */
-position: absolute;
-right: 20%;
-top: 20%;
-}
-.shape13 {
-width: 110px;
-height: 110px;
-clip-path: circle(50% at 50% 70%);
-background-color: #00BCD4; /* teal */
-position: absolute;
-left: 30%;
-bottom: 50%;
-}
-.shape {
-position: absolute;
-z-index: -1; /* Set the z-index to -1 to put it behind other elements */
-}
-</style>
+    a.buttonClass:hover{transform:translateY(-3px);filter:brightness(1.05)}
 
+    /* SIDEBAR */
+    #sidebar{flex:1 1 280px;background:var(--card-bg);padding:20px;border-radius:18px;box-shadow:var(--shadow)}
+
+    footer{text-align:center;padding:22px;margin-top:40px;font-size:.92rem;color:#777}
+
+    @media(max-width:768px){
+      header h1{font-size:2rem}
+      #main-content ul{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:460px){
+      #main-content ul{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
-  <div class="shape1 shape"></div>
-  <div class="shape2 shape"></div>
-  <div class="shape3 shape"></div>
-  <div class="shape4 shape"></div>
-  <div class="shape5 shape"></div>
-  <div class="shape6 shape"></div>
-  <div class="shape7 shape"></div>
-  <div class="shape8 shape"></div>
-  <div class="shape9 shape"></div>
-  <div class="shape10 shape"></div>
-  <div class="shape11 shape"></div>
-  <div class="shape12 shape"></div>
-  <div class="shape13 shape"></div>
-  <div id="main-content">
-    <h1><img style="vertical-align: middle; height: 1em; padding-top: 5px;" src="icon.png"/>Kianko Land</h1>
+  <!-- BACKGROUND -->
+  <canvas class="bg-canvas" id="bgCanvas" aria-hidden="true"></canvas>
+  <div class="soft-overlay" aria-hidden="true"></div>
+
+  <header>
+    <h1><img src="icon.png" alt="icon" />Kianko Land</h1>
     <p><i>The Land of Kindness and Knowledge</i></p>
-    <ul>
-       <li><a id="link1" target="_blank">Link 1</a></li>
-       <li><a id="link2" target="_blank">Link 2</a></li>
-       <li><a id="link3" target="_blank">Link 3</a></li>
-       <li><a id="link4" target="_blank">Link 4</a></li>
-       <li><a id="link5" target="_blank">Link 5</a></li>
-       <li><a id="link6" target="_blank">Link 6</a></li>
-       <li><a id="link7" target="_blank">Link 7</a></li>
-       <li><a id="link8" target="_blank">Link 8</a></li>
-       <li><a id="link9" target="_blank">Link 9</a></li>
-       <li><a id="link10" target="_blank">Link 10</a></li>
-	   <li><iframe data-aa='2159314' src='https://ad.a-ads.com/2159314?size=970x250' style='width:970px; height:250px; border:0px; padding:0; overflow:hidden; background-color: transparent;'></iframe></li>
-    </ul>
+  </header>
+
+  <main>
+    <section id="main-content">
+      <ul>
+        <li><a id="link1"  target="_blank" class="buttonClass">Link 1</a></li>
+        <li><a id="link2"  target="_blank" class="buttonClass">Link 2</a></li>
+        <li><a id="link3"  target="_blank" class="buttonClass">Link 3</a></li>
+        <li><a id="link4"  target="_blank" class="buttonClass">Link 4</a></li>
+        <li><a id="link5"  target="_blank" class="buttonClass">Link 5</a></li>
+        <li><a id="link6"  target="_blank" class="buttonClass">Link 6</a></li>
+        <li><a id="link7"  target="_blank" class="buttonClass">Link 7</a></li>
+        <li><a id="link8"  target="_blank" class="buttonClass">Link 8</a></li>
+        <li><a id="link9"  target="_blank" class="buttonClass">Link 9</a></li>
+        <li><a id="link10" target="_blank" class="buttonClass">Link 10</a></li>
+        <li><a id="link11" target="_blank" class="buttonClass">Link 11</a></li>
+        <li><a id="link12" target="_blank" class="buttonClass">Link 12</a></li>
+      </ul>
+    </section>
+
+    <aside id="sidebar">
+      <a href="https://saweria.co/kindknow" target="_blank">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEij78klLLDQ4HoF611Rq2YAPPD2Od2ujLxcptZHF8oDTeGCerctsGUaAL6SnF43oE4TBMK2U_wSwJELI954ujtufJUxc8WsV2YFolAqpcOUmFilQee0oYA9rvz-tgQrPYsPYKmawxZk3TFLiEvrwSozKKDoHztNvgZWJw05Ft9XD5Xk3ekXwKIcXjnM/s320/saweria.PNG" 
+             alt="donasi" style="width:100%;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.1);" />
+      </a>
+    </aside>
+  </main>
+
+  <footer>&copy; 2025 Kianko Land · All rights reserved</footer>
+
+  <script>
+    /* ========== RANDOM LINKS (12) ========== */
+    const daftarLink = [['https://random-english-words.blogspot.com/','<img width="30px" height="auto" src="ukflag.png"/>Random English Words'],
+	['https://swrdfgd.github.io/PunkRecords','📚Punk Records'],
+	['https://randomarabicwords.blogspot.com/','<img width="30px" height="auto" src="arabflag.png"/>Random Arabic Words'],
+	['https://swrdfgd.github.io/RandomYoutube/','📺Random Youtube Video'],
+	['https://swrdfgd.github.io/RandomYoutubeVideos/','📺Random Youtube Video'],
+	['https://swrdfgd.github.io/BelajarMembaca/','📖Belajar Membaca Huruf Latin Generator'],
+	['https://www.knkland.com/p/ruang-koding.html','💻Ruang Koding'],
+	['https://internetmainmenu.blogspot.com/','🌐Internet Main Menu'],
+	['https://swrdfgd.github.io/HiraganaPractice/','<img width="30px" height="auto" src="jpflag.png"/>Hiragana Practice'],
+	['https://swrdfgd.github.io/KatakanaPractice/','<img width="30px" height="auto" src="jpflag.png"/>Katakana Practice'],
+	['https://swrdfgd.github.io/RandomWebsite/','🌐🏄Random Website List'],
+	['https://pergikemanamanasaja.blogspot.com/','🌐🚶Pergi Ke Mana Saja'],
+	['https://mathzpace.blogspot.com/','🚀mathZpace'],
+	['https://swrdfgd.github.io/HiraKataPractice/','<img width="30px" height="auto" src="jpflag.png"/>Hiragana and Katakana Practice'],
+	['https://frk-tal.blogspot.com/2021/12/string-permutations-generator.html','🔡🔄String Permutations Generator'],
+	['https://frk-tal.blogspot.com/p/random-imgur.html','🖼Random Imgur Image Generator'],
+	['https://frk-tal.blogspot.com/2022/09/graph-sketcher.html','🖍Graph Sketcher'],
+	['https://frk-tal.blogspot.com/2022/09/random-food-generator.html','🍖Random Food Generator'],
+	['https://frk-tal.blogspot.com/2022/08/random-plants-vs-zombies-2-plants.html','🌱🧟Random Plants Vs Zombies 2 Plants Generator'],
+	['https://frk-tal.blogspot.com/2022/08/random-substance-generator.html','⚗Random Substance Generator'],
+	['https://frk-tal.blogspot.com/2022/08/random-graph-generator.html','🖍Random Graph Generator'],
+	//['https://frk-tal.blogspot.com/2022/08/random-yugioh-card-generator.html','🎴Random Yugioh Card Generator'],
+	['https://frk-tal.blogspot.com/2022/08/color-gradient-generator.html','🌈Random Color Gradient Generator'],
+	['https://frk-tal.blogspot.com/2022/07/random-color-generator.html','🌈Random Color Generator'],
+	['https://frk-tal.blogspot.com/2022/07/random-compound-generator.html','🧪Random Compound Generator'],
+	['https://frk-tal.blogspot.com/2023/01/random-species-generator.html','🐜Random Species Generator'],
+	['https://www.knkland.com/p/kuisku.html','🧠Kuisku'],
+	['https://swrdfgd.github.io/BraillePractice/','👩‍🦯👨‍🦯Braille Practice'],
+	//['https://swrdfgd.github.io/RandomYugioh/','🎴Random Yugioh Card Generator'],
+	['https://swrdfgd.github.io/MakhlukWorld/','🕶️Makhluk World'],
+	['https://frk-tal.blogspot.com/2021/10/euclidean-algorithm-calculator-finding.html','🔢Euclidean Algorithm Calculator'],
+	['https://swrdfgd.github.io/NumGen/','🔢Random Number Generator'],
+	['https://swrdfgd.github.io/AreaZeroZero/','(0,0) Area ZeroZero'],
+	['https://frk-tal.blogspot.com/2023/09/divisibility-calculator.html','🔢Divisibility Calculator'],
+	['https://swrdfgd.github.io/MathVideos/','🔢Math Videos'],
+	['https://swrdfgd.github.io/RandomOnePiece/','🏴‍☠️Random One Piece Character'],
+	['https://swrdfgd.github.io/RandomImage/','🖼️Random Image Generator'],
+	['https://swrdfgd.github.io/RandomWords/','💬Random Words'],
+	['https://swrdfgd.github.io/RandomFood/','🍖Random Food Generator'],
+	['https://swrdfgd.github.io/RandomPattern/indexTimedBackground.html','▩Random Pattern'],
+	['https://swrdfgd.github.io/GraphSketcher/','✏️Graph Sketcher'],
+	['https://swrdfgd.github.io/LearnTyping/','⌨️Learn Typing'],
+	['https://swrdfgd.github.io/mathZpace/','🔢🌌mathZpace'],
+	['https://swrdfgd.github.io/MathAcak/','🎲Soal Matematika Acak'],
+	['https://swrdfgd.github.io/PrimeFactor/','🧮Prime Factorization Calculator'],
+	['https://swrdfgd.github.io/SearchAnywhere/','🔍Search Anywhere'],
+	['https://swrdfgd.github.io/RPST3/','✊✋✌️Rock Paper Scissor Tic Tac Toe Fusion'],
+	['https://swrdfgd.github.io/RandomQuranVerse/','🌙🕌Random Quran Verse'],
+	['https://swrdfgd.github.io/GimmeThings/','🤲Gimme Things'],
+	['https://swrdfgd.github.io/RandomChineseChar/','🀄Random Chinese Character Generator'],
+	['https://swrdfgd.github.io/EmojiScreenSaver/','🖥️Emoji Screen Saver'],
+	['https://swrdfgd.github.io/TodayVibe/','☕Today Vibe'],
+	['https://swrdfgd.github.io/ScreenSaver/','🔤Flying Characters Screen Saver'],
+	['https://swrdfgd.github.io/RandomMathVideos/','🎥📚🔢Random Math Videos'],
+	['https://swrdfgd.github.io/MathVideos/','🎥📚🔢Math Videos'],
+	['https://swrdfgd.github.io/MathKeywords/','🎥📚🔢Random Math Keywords'],
+	['https://swrdfgd.github.io/RandomSeating/','🪑Random Seating Allocation Generator'],
+	['https://swrdfgd.github.io/RandomSubset/','🎲🔢Random Subset Generator'],
+	['https://swrdfgd.github.io/LandOfKindness/','💗Land of Kindness'],
+	['https://swrdfgd.github.io/LandOfKnowledge/','🌐Land of Knowledge'],
+	['https://swrdfgd.github.io/RandomMatrix/','🎲🔢Random Matrix Generator'],
+	['http://cointiply.com/r/3xgnG','<img width="30px" height="auto" src="bitcoin.png"/>Free Bitcoin'],
+	['https://swrdfgd.github.io/RandomLinks/','<img width="30px" height="auto" src="bitcoin.png"/>🎲🌐Random Links Generator'],
+	];
 	
-  <div id="bawah">
-  
-  </div>
-  </div>
-<script>
-var daftarLink = [['https://random-english-words.blogspot.com/','<img width="30px" height="auto" src="ukflag.png"/>Random English Words'],
-['https://swrdfgd.github.io/PunkRecords','📚Punk Records'],
-['https://randomarabicwords.blogspot.com/','<img width="30px" height="auto" src="arabflag.png"/>Random Arabic Words'],
-['https://swrdfgd.github.io/RandomYoutube/','📺Random Youtube Video'],
-['https://swrdfgd.github.io/RandomYoutubeVideos/','📺Random Youtube Video'],
-['https://swrdfgd.github.io/BelajarMembaca/','📖Belajar Membaca Huruf Latin Generator'],
-['https://www.knkland.com/p/ruang-koding.html','💻Ruang Koding'],
-['https://internetmainmenu.blogspot.com/','🌐Internet Main Menu'],
-['https://swrdfgd.github.io/HiraganaPractice/','<img width="30px" height="auto" src="jpflag.png"/>Hiragana Practice'],
-['https://swrdfgd.github.io/KatakanaPractice/','<img width="30px" height="auto" src="jpflag.png"/>Katakana Practice'],
-['https://swrdfgd.github.io/RandomWebsite/','🌐🏄Random Website List'],
-['https://pergikemanamanasaja.blogspot.com/','🌐🚶Pergi Ke Mana Saja'],
-['https://mathzpace.blogspot.com/','🚀mathZpace'],
-['https://swrdfgd.github.io/HiraKataPractice/','<img width="30px" height="auto" src="jpflag.png"/>Hiragana and Katakana Practice'],
-['https://frk-tal.blogspot.com/2021/12/string-permutations-generator.html','🔡🔄String Permutations Generator'],
-['https://frk-tal.blogspot.com/p/random-imgur.html','🖼Random Imgur Image Generator'],
-['https://frk-tal.blogspot.com/2022/09/graph-sketcher.html','🖍Graph Sketcher'],
-['https://frk-tal.blogspot.com/2022/09/random-food-generator.html','🍖Random Food Generator'],
-['https://frk-tal.blogspot.com/2022/08/random-plants-vs-zombies-2-plants.html','🌱🧟Random Plants Vs Zombies 2 Plants Generator'],
-['https://frk-tal.blogspot.com/2022/08/random-substance-generator.html','⚗Random Substance Generator'],
-['https://frk-tal.blogspot.com/2022/08/random-graph-generator.html','🖍Random Graph Generator'],
-//['https://frk-tal.blogspot.com/2022/08/random-yugioh-card-generator.html','🎴Random Yugioh Card Generator'],
-['https://frk-tal.blogspot.com/2022/08/color-gradient-generator.html','🌈Random Color Gradient Generator'],
-['https://frk-tal.blogspot.com/2022/07/random-color-generator.html','🌈Random Color Generator'],
-['https://frk-tal.blogspot.com/2022/07/random-compound-generator.html','🧪Random Compound Generator'],
-['https://frk-tal.blogspot.com/2023/01/random-species-generator.html','🐜Random Species Generator'],
-['https://www.knkland.com/p/kuisku.html','🧠Kuisku'],
-['https://swrdfgd.github.io/BraillePractice/','👩‍🦯👨‍🦯Braille Practice'],
-//['https://swrdfgd.github.io/RandomYugioh/','🎴Random Yugioh Card Generator'],
-['https://swrdfgd.github.io/MakhlukWorld/','🕶️Makhluk World'],
-['https://frk-tal.blogspot.com/2021/10/euclidean-algorithm-calculator-finding.html','🔢Euclidean Algorithm Calculator'],
-['https://swrdfgd.github.io/NumGen/','🔢Random Number Generator'],
-['https://swrdfgd.github.io/AreaZeroZero/','(0,0) Area ZeroZero'],
-['https://frk-tal.blogspot.com/2023/09/divisibility-calculator.html','🔢Divisibility Calculator'],
-['https://swrdfgd.github.io/MathVideos/','🔢Math Videos'],
-['https://swrdfgd.github.io/RandomOnePiece/','🏴‍☠️Random One Piece Character'],
-['https://swrdfgd.github.io/RandomImage/','🖼️Random Image Generator'],
-['https://swrdfgd.github.io/RandomWords/','💬Random Words'],
-['https://swrdfgd.github.io/RandomFood/','🍖Random Food Generator'],
-['https://swrdfgd.github.io/RandomPattern/indexTimedBackground.html','▩Random Pattern'],
-['https://swrdfgd.github.io/GraphSketcher/','✏️Graph Sketcher'],
-['https://swrdfgd.github.io/LearnTyping/','⌨️Learn Typing'],
-['https://swrdfgd.github.io/mathZpace/','🔢🌌mathZpace'],
-['https://swrdfgd.github.io/MathAcak/','🎲Soal Matematika Acak'],
-['https://swrdfgd.github.io/PrimeFactor/','🧮Prime Factorization Calculator'],
-['https://swrdfgd.github.io/SearchAnywhere/','🔍Search Anywhere'],
-['https://swrdfgd.github.io/RPST3/','✊✋✌️Rock Paper Scissor Tic Tac Toe Fusion'],
-['https://swrdfgd.github.io/RandomQuranVerse/','🌙🕌Random Quran Verse'],
-['https://swrdfgd.github.io/GimmeThings/','🤲Gimme Things'],
-['https://swrdfgd.github.io/RandomChineseChar/','🀄Random Chinese Character Generator'],
-['https://swrdfgd.github.io/EmojiScreenSaver/','🖥️Emoji Screen Saver'],
-['https://swrdfgd.github.io/TodayVibe/','☕Today Vibe'],
-['https://swrdfgd.github.io/ScreenSaver/','🔤Flying Characters Screen Saver'],
-['https://swrdfgd.github.io/RandomMathVideos/','🎥📚🔢Random Math Videos'],
-['https://swrdfgd.github.io/MathVideos/','🎥📚🔢Math Videos'],
-['https://swrdfgd.github.io/MathKeywords/','🎥📚🔢Random Math Keywords'],
-['https://swrdfgd.github.io/RandomSeating/','🪑Random Seating Allocation Generator'],
-['https://swrdfgd.github.io/RandomSubset/','🎲🔢Random Subset Generator'],
-['https://swrdfgd.github.io/LandOfKindness/','💗Land of Kindness'],
-['https://swrdfgd.github.io/LandOfKnowledge/','🌐Land of Knowledge'],
-['https://swrdfgd.github.io/RandomMatrix/','🎲🔢Random Matrix Generator'],
-['http://cointiply.com/r/3xgnG','<img width="30px" height="auto" src="bitcoin.png"/>Free Bitcoin'],
-['https://swrdfgd.github.io/RandomLinks/','<img width="30px" height="auto" src="bitcoin.png"/>🎲🌐Random Links Generator'],
-];
-
-for (let i = 1; i < 11; i++){
-pilihanLink = daftarLink[Math.floor(Math.random()*daftarLink.length)];
-document.getElementById(`link${i}`).href = pilihanLink[0];
-document.getElementById(`link${i}`).innerHTML = pilihanLink[1];
-document.getElementById(`link${i}`).setAttribute('class',"buttonClass");
-}
-
-</script>
-  
-
-  <div id="sidebar">
-    <style scoped='' type="text/css">
-.arlina-random ul{list-style:none;margin:0;padding:0}#arlina-random li{display:block;clear:both;overflow:hidden;list-style:none;border-bottom:1px solid #e3e3e3;word-break:break-word;padding:10px 0;margin:0;}
-.arlina-random li:last-child{border-bottom:0;}
-.arlina-random li a{color:#444;}#arlina-random li a:hover{color:#444;text-decoration:underline}
-
-
-</style>
-<div id='arlina-random1' class="arlina-random">Memuat...</div>
-<div id='arlina-random2' class="arlina-random">Memuat...</div>
-<div id='arlina-random3' class="arlina-random">Memuat...</div>
-<div id='arlina-random4' class="arlina-random">Memuat...</div>
-<div><script>
-   document.write('<scr'+'ipt type="text/javascript" src="https://100widgets.com/js_data.php?id=75"></scr'+'ipt>')
-</script></div>
-<div><a href="https://saweria.co/kindknow" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="430" data-original-width="318" height="320" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEij78klLLDQ4HoF611Rq2YAPPD2Od2ujLxcptZHF8oDTeGCerctsGUaAL6SnF43oE4TBMK2U_wSwJELI954ujtufJUxc8WsV2YFolAqpcOUmFilQee0oYA9rvz-tgQrPYsPYKmawxZk3TFLiEvrwSozKKDoHztNvgZWJw05Ft9XD5Xk3ekXwKIcXjnM/s320/saweria.PNG" width="237" /></a></div>
-
-<script>
-daftarweb = ['https://www.knkland.com/','https://maswody.blogspot.com/','https://maplescuul.blogspot.com/','https://frk-tal.blogspot.com/','https://matiyamenye.blogspot.com/',];
-</script>
-<script>
-var maxResults = 1,
-    
-    pilihanweb = Math.floor(Math.random()*(daftarweb.length)),
-    homePage = daftarweb[pilihanweb],
-    containerId = 'arlina-random1';
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-function shuffleArray(arr) {
-    var i = arr.length, j, temp;
-    if (i === 0) return false;
-    while (--i) {
-        j = Math.floor(Math.random() * (i + 1));
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+	
+    for(let i=1;i<=12;i++){
+      const choice=daftarLink[Math.floor(Math.random()*daftarLink.length)];
+      const el=document.getElementById(`link${i}`);
+      if(el){el.href=choice[0];el.innerHTML=choice[1];}
     }
-    return arr;
-}
-function ArlinaRandomPosts(json) {
-    var startIndex = getRandomInt(1, (json.feed.openSearch$totalResults.$t - maxResults));
-    // console.log('Get the post feed start from ' + startIndex + ' until ' + (startIndex + maxResults));
-    document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&orderby=updated&start-index=' + startIndex + '&max-results=' + maxResults + '&callback=randomPosts"></scr' + 'ipt>');
-}
-function randomPosts(json) {
-    var link, ct = document.getElementById(containerId),
-        entry = shuffleArray(json.feed.entry),
-        skeleton = "<ul>";
-    for (var i = 0, len = entry.length; i < len; i++) {
-        for (var j = 0, jen = entry[i].link.length; j < jen; j++) {
-            link = (entry[i].link[j].rel == "alternate") ? entry[i].link[j].href : '#';
+
+    /* ========== BACKGROUND BALLS ========== */
+    (function(){
+      const canvas=document.getElementById('bgCanvas');
+      const ctx=canvas.getContext('2d',{alpha:true});
+      let dpr=window.devicePixelRatio||1,width,height,balls=[];
+      const rand=(a,b)=>a+Math.random()*(b-a);
+
+      function resize(){
+        const cssW=window.innerWidth,cssH=window.innerHeight;
+        dpr=window.devicePixelRatio||1;
+        canvas.width=cssW*dpr;canvas.height=cssH*dpr;
+        canvas.style.width=cssW+'px';canvas.style.height=cssH+'px';
+        width=canvas.width;height=canvas.height;
+      }
+
+      function makeBall(){
+        const r=rand(14,46)*dpr;
+        const spd=rand(0.06,0.35)*dpr;
+        const dir=Math.random()*Math.PI*2;
+        const hue=Math.floor(Math.random()*360);
+        const sat=Math.floor(rand(60,100));
+        const light=Math.floor(rand(40,65));
+        return {
+          x:rand(r,width-r),y:rand(r,height-r),r,
+          vx:Math.cos(dir)*spd,vy:Math.sin(dir)*spd,
+          color:`hsla(${hue},${sat}%,${light}%,0.35)`,
+          glow:`hsla(${hue},${sat}%,${light}%,0.55)`
+        };
+      }
+
+      function step(){
+        ctx.clearRect(0,0,width,height);
+        for(const b of balls){
+          b.x+=b.vx;b.y+=b.vy;
+          if(b.x<b.r||b.x>width-b.r) b.vx*=-1;
+          if(b.y<b.r||b.y>height-b.r) b.vy*=-1;
+          ctx.beginPath();
+          ctx.arc(b.x,b.y,b.r*1.8,0,Math.PI*2);
+          const g=ctx.createRadialGradient(b.x,b.y,b.r*0.2,b.x,b.y,b.r*1.8);
+          g.addColorStop(0,b.glow);g.addColorStop(1,'transparent');
+          ctx.fillStyle=g;ctx.fill();
+          ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+          ctx.fillStyle=b.color;ctx.fill();
         }
-        skeleton += '<li><a href="' + link + '">' + entry[i].title.$t + '</a></li>';
+        requestAnimationFrame(step);
+      }
 
-    }
-    ct.innerHTML = skeleton + '</ul>';
-    MathJax.typeset();
-}
-document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&max-results=0&callback=ArlinaRandomPosts"></scr' + 'ipt>');
-</script>
-<script>
-var maxResults = 1,
-    pilihanweb = Math.floor(Math.random()*(daftarweb.length)),
-    homePage = daftarweb[pilihanweb],
-    containerId = 'arlina-random2';
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-function shuffleArray(arr) {
-    var i = arr.length, j, temp;
-    if (i === 0) return false;
-    while (--i) {
-        j = Math.floor(Math.random() * (i + 1));
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-    return arr;
-}
-function ArlinaRandomPosts(json) {
-    var startIndex = getRandomInt(1, (json.feed.openSearch$totalResults.$t - maxResults));
-    // console.log('Get the post feed start from ' + startIndex + ' until ' + (startIndex + maxResults));
-    document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&orderby=updated&start-index=' + startIndex + '&max-results=' + maxResults + '&callback=randomPosts"></scr' + 'ipt>');
-}
-function randomPosts(json) {
-    var link, ct = document.getElementById(containerId),
-        entry = shuffleArray(json.feed.entry),
-        skeleton = "<ul>";
-    for (var i = 0, len = entry.length; i < len; i++) {
-        for (var j = 0, jen = entry[i].link.length; j < jen; j++) {
-            link = (entry[i].link[j].rel == "alternate") ? entry[i].link[j].href : '#';
-        }
-        skeleton += '<li><a href="' + link + '">' + entry[i].title.$t + '</a></li>';
-
-    }
-    ct.innerHTML = skeleton + '</ul>';
-    MathJax.typeset();
-}
-document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&max-results=0&callback=ArlinaRandomPosts"></scr' + 'ipt>');
-</script>
-<script>
-var maxResults = 1,
-    pilihanweb = Math.floor(Math.random()*(daftarweb.length)),
-    homePage = daftarweb[pilihanweb],
-    containerId = 'arlina-random3';
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-function shuffleArray(arr) {
-    var i = arr.length, j, temp;
-    if (i === 0) return false;
-    while (--i) {
-        j = Math.floor(Math.random() * (i + 1));
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-    return arr;
-}
-function ArlinaRandomPosts(json) {
-    var startIndex = getRandomInt(1, (json.feed.openSearch$totalResults.$t - maxResults));
-    // console.log('Get the post feed start from ' + startIndex + ' until ' + (startIndex + maxResults));
-    document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&orderby=updated&start-index=' + startIndex + '&max-results=' + maxResults + '&callback=randomPosts"></scr' + 'ipt>');
-}
-function randomPosts(json) {
-    var link, ct = document.getElementById(containerId),
-        entry = shuffleArray(json.feed.entry),
-        skeleton = "<ul>";
-    for (var i = 0, len = entry.length; i < len; i++) {
-        for (var j = 0, jen = entry[i].link.length; j < jen; j++) {
-            link = (entry[i].link[j].rel == "alternate") ? entry[i].link[j].href : '#';
-        }
-        skeleton += '<li><a href="' + link + '">' + entry[i].title.$t + '</a></li>';
-
-    }
-    ct.innerHTML = skeleton + '</ul>';
-    MathJax.typeset();
-}
-document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&max-results=0&callback=ArlinaRandomPosts"></scr' + 'ipt>');
-</script>
-<script>
-var maxResults = 1,
-    pilihanweb = Math.floor(Math.random()*(daftarweb.length)),
-    homePage = daftarweb[pilihanweb],
-    containerId = 'arlina-random4';
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-function shuffleArray(arr) {
-    var i = arr.length, j, temp;
-    if (i === 0) return false;
-    while (--i) {
-        j = Math.floor(Math.random() * (i + 1));
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-    return arr;
-}
-function ArlinaRandomPosts(json) {
-    var startIndex = getRandomInt(1, (json.feed.openSearch$totalResults.$t - maxResults));
-    // console.log('Get the post feed start from ' + startIndex + ' until ' + (startIndex + maxResults));
-    document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&orderby=updated&start-index=' + startIndex + '&max-results=' + maxResults + '&callback=randomPosts"></scr' + 'ipt>');
-}
-function randomPosts(json) {
-    var link, ct = document.getElementById(containerId),
-        entry = shuffleArray(json.feed.entry),
-        skeleton = "<ul>";
-    for (var i = 0, len = entry.length; i < len; i++) {
-        for (var j = 0, jen = entry[i].link.length; j < jen; j++) {
-            link = (entry[i].link[j].rel == "alternate") ? entry[i].link[j].href : '#';
-        }
-        skeleton += '<li><a href="' + link + '">' + entry[i].title.$t + '</a></li>';
-
-    }
-    ct.innerHTML = skeleton + '</ul>';
-    MathJax.typeset();
-}
-document.write('<scr' + 'ipt src="' + homePage + '/feeds/posts/summary?alt=json-in-script&max-results=0&callback=ArlinaRandomPosts"></scr' + 'ipt>');
-</script>
-  </div>
-  
-
-
-
+      resize();
+      window.addEventListener('resize',resize);
+	  var maxBola = 80;
+	  while (Math.random() < 0.5){maxBola++}
+      const total=Math.floor(rand(0,maxBola)); // jumlah bola random
+      balls=Array.from({length:total},makeBall);
+      requestAnimationFrame(step);
+    })();
+  </script>
 </body>
 </html>
